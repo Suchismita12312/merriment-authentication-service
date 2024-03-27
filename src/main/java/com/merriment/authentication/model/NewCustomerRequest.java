@@ -31,6 +31,9 @@ public class NewCustomerRequest {
   @JsonProperty("password")
   private String password = null;
 
+  @JsonProperty("email")
+  private String email = null;
+
   @JsonProperty("serviceCode")
   private String serviceCode = null;
 
@@ -44,6 +47,24 @@ public class NewCustomerRequest {
    * @return userName
   **/
   @ApiModelProperty(value = "")
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
+  public NewCustomerRequest email(String email) {
+    this.email = email;
+    return this;
+  }
+
+  /**
+   * Get userName
+   * @return userName
+   **/
+  @ApiModelProperty(value = "")
   public String getUserName() {
     return userName;
   }
@@ -51,7 +72,6 @@ public class NewCustomerRequest {
   public void setUserName(String userName) {
     this.userName = userName;
   }
-
   public NewCustomerRequest password(String password) {
     this.password = password;
     return this;
@@ -100,12 +120,13 @@ public class NewCustomerRequest {
     NewCustomerRequest newCustomerRequest = (NewCustomerRequest) o;
     return Objects.equals(this.userName, newCustomerRequest.userName) &&
         Objects.equals(this.password, newCustomerRequest.password) &&
+            Objects.equals(this.email, newCustomerRequest.email) &&
         Objects.equals(this.serviceCode, newCustomerRequest.serviceCode);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(userName, password, serviceCode);
+    return Objects.hash(userName, password, email, serviceCode);
   }
 
 
@@ -116,6 +137,7 @@ public class NewCustomerRequest {
     
     sb.append("    userName: ").append(toIndentedString(userName)).append("\n");
     sb.append("    password: ").append(toIndentedString(password)).append("\n");
+    sb.append("    email: ").append(toIndentedString(email)).append("\n");
     sb.append("    serviceCode: ").append(toIndentedString(serviceCode)).append("\n");
     sb.append("}");
     return sb.toString();
