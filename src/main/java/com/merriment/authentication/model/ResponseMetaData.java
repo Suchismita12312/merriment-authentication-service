@@ -28,6 +28,7 @@ import java.util.List;
  */
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2024-03-19T13:48:13.393+01:00")
 public class ResponseMetaData {
+
   @JsonProperty("message")
   private String message = null;
 

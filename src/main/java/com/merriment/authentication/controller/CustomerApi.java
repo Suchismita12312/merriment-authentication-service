@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.merriment.authentication.repository.NewCustomerRepository;
+
 import com.merriment.authentication.service.NewCustomerService;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,7 @@ import com.merriment.authentication.model.ResponseMetaData;
 
 
 @RestController
-@RequestMapping("/merriment")
+@RequestMapping("/merriment/authentication")
 public class CustomerApi {
 
     /**
@@ -49,7 +49,7 @@ public class CustomerApi {
     public CustomerApi(NewCustomerService newCustomerService){
         this.newCustomerService = newCustomerService;
     }
-    @PostMapping(value = "/NewCustomer")
+    @PostMapping(value = "/newcustomer")
     public ResponseEntity<ResponseMetaData> newCustomer(@RequestBody NewCustomerRequest newCustomerRequest) throws RestClientException {
 
             ResponseMetaData response;
