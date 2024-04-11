@@ -1,12 +1,15 @@
 package com.merriment.authentication.controller;
 
 
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 
+import com.merriment.authentication.model.User;
 import com.merriment.authentication.service.NewCustomerService;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +17,8 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.UnsatisfiedServletRequestParameterException;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -57,10 +58,26 @@ public class CustomerApi {
             if (newCustomerRequest == null) {
                 throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'newCustomerRequest' when calling newCustomer");
             } else {
-                response = newCustomerService.registerNewCustomer(newCustomerRequest);
+                try {
+                    response = newCustomerService.registerNewCustomer(newCustomerRequest);
+                } catch (NoSuchAlgorithmException e) {
+                    throw new RuntimeException(e);
+                } catch (InvalidKeySpecException e) {
+                    throw new RuntimeException(e);
+                }
             }
 
         
         return new ResponseEntity<>(response,HttpStatus.CREATED);
+    }
+
+    @PutMapping(value = "/login")
+    public ResponseEntity<ResponseMetaData> login(@RequestBody User user){
+        ResponseMetaData response;
+        if(user == null){
+            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'newCustomerRequest' when calling newCustomer");
+        }
+        response = newCustomerService.login(user);
+        return new ResponseEntity<>(response,HttpStatus.OK);
     }
 }
